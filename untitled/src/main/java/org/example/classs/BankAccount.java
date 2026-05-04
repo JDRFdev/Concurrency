@@ -7,7 +7,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public void deposit(long amount){
+    public synchronized void deposit(long amount){
         this.balance+=amount;
     }
     public void withdraw(long amount){
