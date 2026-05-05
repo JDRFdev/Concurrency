@@ -1,14 +1,16 @@
 package org.example.classs;
 
 public class BankAccount {
-    private long balance;
+    private volatile long balance;
 
     public BankAccount(long balance) {
         this.balance = balance;
     }
 
-    public synchronized void deposit(long amount){
+    public synchronized void deposit(long amount, char c){
         this.balance+=amount;
+        System.out.println("Here we have the first result: "+c +"-"+ this.balance);
+
     }
     public void withdraw(long amount){
         this.balance-=amount;

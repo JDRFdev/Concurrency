@@ -7,15 +7,14 @@ public class Main {
         BankAccount OnlyAccount=new BankAccount(0);
         Thread oneThread=new Thread(()->{
             for (int i=0;i<10_000;i++){
-                OnlyAccount.deposit(1);
+                OnlyAccount.deposit(1,'A');
             }
-            System.out.println("Here we have the first result: "+OnlyAccount.getBalance());
+
         });
         Thread twoThread=new Thread(()->{
             for (int i=0;i<10_000;i++){
-                OnlyAccount.deposit(1);
+                OnlyAccount.deposit(1,'B');
             }
-            System.out.println("Here we have th second result: "+OnlyAccount.getBalance());
         });
         oneThread.start();
         twoThread.start();
