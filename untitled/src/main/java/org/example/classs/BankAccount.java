@@ -7,10 +7,8 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public synchronized void deposit(long amount, char c){
+    public void deposit(long amount){
         this.balance+=amount;
-        System.out.println("Here we have the first result: "+c +"-"+ this.balance);
-
     }
     public void withdraw(long amount){
         this.balance-=amount;
