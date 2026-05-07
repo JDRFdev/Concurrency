@@ -7,10 +7,15 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public void deposit(long amount){
-        this.balance+=amount;
+    public synchronized void deposit(BankAccount account,int amount){
+        try {
+            Thread.sleep(100);
+            account.withdraw(amount);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public void withdraw(long amount){
+    public synchronized void withdraw(long amount){
         this.balance-=amount;
     }
 
