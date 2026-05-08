@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         try {
-            BankAccount FirstAccount = new BankAccount(0);
-            BankAccount SecondAccount = new BankAccount(0);
+            BankAccount FirstAccount = new BankAccount(0,1);
+            BankAccount SecondAccount = new BankAccount(0,2);
             Thread FirstThread = new Thread(() -> {
                 FirstAccount.deposit(SecondAccount,1);
             });

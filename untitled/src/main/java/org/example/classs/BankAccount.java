@@ -1,21 +1,44 @@
 package org.example.classs;
 
 public class BankAccount {
-    private volatile long balance;
-
-    public BankAccount(long balance) {
+    private long balance;
+    private int id;
+    public BankAccount(long balance, int id) {
         this.balance = balance;
+        this.id=id;
     }
 
-    public synchronized void deposit(BankAccount account,int amount){
+    public void deposit(BankAccount account,int amount){
         try {
-            Thread.sleep(100);
-            account.withdraw(amount);
+            if(this.id< account.getId()){
+
+                 synchronized (this) {
+                    synchronized (account) {
+                        Thread.sleep(100);
+                        this.balance+=amount;
+                        System.out.println("------------------------------------------");
+                        System.out.println("My account has: $"+this.getBalance());
+                        System.out.println("Second account has: $"+account.getBalance());
+                        System.out.println("------------------------------------------");
+                    }
+                    }
+            }else if(this.id>account.getId()) {
+                synchronized (account) {
+                    synchronized (this) {
+                        Thread.sleep(100);
+                        this.balance+=amount;
+                        System.out.println("------------------------------------------");
+                        System.out.println("My account has: $"+this.getBalance());
+                        System.out.println("First account has: $"+account.getBalance());
+                        System.out.println("------------------------------------------");
+                    }
+                }
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
-    public synchronized void withdraw(long amount){
+    public void withdraw(long amount){
         this.balance-=amount;
     }
 
@@ -25,5 +48,9 @@ public class BankAccount {
 
     public long getBalance() {
         return balance;
+    }
+
+    public int getId() {
+        return id;
     }
 }
