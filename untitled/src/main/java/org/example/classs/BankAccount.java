@@ -1,56 +1,28 @@
 package org.example.classs;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class BankAccount {
-    private long balance;
-    private int id;
-    public BankAccount(long balance, int id) {
+    private AtomicLong balance;
+    public BankAccount(AtomicLong balance){
         this.balance = balance;
-        this.id=id;
+    }
+    public BankAccount() {
+        this.balance=new AtomicLong(0);
     }
 
-    public void deposit(BankAccount account,int amount){
-        try {
-            if(this.id< account.getId()){
-
-                 synchronized (this) {
-                    synchronized (account) {
-                        Thread.sleep(100);
-                        this.balance+=amount;
-                        System.out.println("------------------------------------------");
-                        System.out.println("My account has: $"+this.getBalance());
-                        System.out.println("Second account has: $"+account.getBalance());
-                        System.out.println("------------------------------------------");
-                    }
-                    }
-            }else if(this.id>account.getId()) {
-                synchronized (account) {
-                    synchronized (this) {
-                        Thread.sleep(100);
-                        this.balance+=amount;
-                        System.out.println("------------------------------------------");
-                        System.out.println("My account has: $"+this.getBalance());
-                        System.out.println("First account has: $"+account.getBalance());
-                        System.out.println("------------------------------------------");
-                    }
-                }
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void deposit(long amount){
+        this.balance.addAndGet(amount);
     }
     public void withdraw(long amount){
-        this.balance-=amount;
+        this.balance.addAndGet(-amount);
     }
 
     public void setBalance(long balance) {
-        this.balance = balance;
+        this.balance.set(balance);
     }
 
     public long getBalance() {
-        return balance;
-    }
-
-    public int getId() {
-        return id;
+        return this.balance.get();
     }
 }

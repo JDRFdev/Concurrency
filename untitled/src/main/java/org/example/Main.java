@@ -7,13 +7,18 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         try {
-            BankAccount FirstAccount = new BankAccount(0,1);
-            BankAccount SecondAccount = new BankAccount(0,2);
+            BankAccount OnlyAccount = new BankAccount();
             Thread FirstThread = new Thread(() -> {
-                FirstAccount.deposit(SecondAccount,1);
+                for (int i=0;i<1000000;i++){
+                    OnlyAccount.deposit(1);
+                }
+                System.out.println("The value with thread #1 is: $"+OnlyAccount.getBalance());
             });
             Thread SecondThread = new Thread(() -> {
-                SecondAccount.deposit(FirstAccount,1);
+                for (int i=0;i<1000000;i++){
+                    OnlyAccount.deposit(1);
+                }
+                System.out.println("The value with thread #2 is: $"+OnlyAccount.getBalance());
             });
             FirstThread.start();
             SecondThread.start();
